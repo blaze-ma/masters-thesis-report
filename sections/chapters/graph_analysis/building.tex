@@ -1,0 +1,12 @@
+Within this thesis, there are two target edge categories that are valuable to predict: distance, and hierarchy.
+Therefore, it is reasonable to create an initial investigative graph containing this information.
+
+The graph will contain only place nodes, one node for each unique place ID. For simplicity, the distance edges
+will not yet be binned, and each hierarchical relationship will explicitly be defined instead of relying on meta-paths.
+
+The database engine storing the graph will be Neo4J, populated by a Python script while the analysis will be mainly done
+with Gephi~\cite{Gephi}.
+
+While building the graph, it became apparent that the number of disconnected nodes are exceedingly high (6289 nodes are orphans out of 14863 total nodes), therefore
+the decision was made to only consider connected nodes as part of the graph, especially since the link prediction methods
+require at least some connections.
