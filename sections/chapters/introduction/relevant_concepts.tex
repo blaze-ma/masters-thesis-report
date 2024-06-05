@@ -97,3 +97,37 @@ The end user may access and modify the data via Neo4J's custom query language - 
 
 While other similar graph database engines are available and would have been sufficient, this project uses Neo4J
 due to its wide adoption and subsequent easy of access to relevant information.
+
+\subsection{Evaluation Metrics}
+This section details the commonly used metrics in link prediction literature.
+The usual environment for model evaluation involves the generation of synthetic negative triplets.
+These negative triplets, alongside the posit are then ranked based on the score
+There are various methods for synthetic negative generation, but in this thesis, a simple corruption
+method was used, where either the tail or the head entity is changed in a positive triplet.
+
+This approach is later discussed in section TODO Insert conclusion section.
+
+Notationally, in the next few section $Q$ refers to a set of triples $s = (h,r,t)$ where $s \in Q$~\cite{ampligraph}
+\subsubsection{Rank Score}
+Simple integer value, the rank of a positive triplet in a vector of negative triplets.
+
+\subsubsection{Mean Rank}
+The average rank score of a vector of a positive triplets in $Q$
+\[
+MR = \frac{1}{|Q|}\sum_{i = 1}^{|Q|}rank_{(h, r, t)_i}
+\]
+
+\subsubsection{Mean Reciprocal Rank}
+Similar to Mean rank, but instead of averaging triplet ranks, the reciprocal of ranks are averaged.
+This should make the metric more robust against outliers ~\cite{ampligraph}
+
+\[
+    MRR = \frac{1}{|Q|}\sum_{i = 1}^{|Q|}\frac{1}{rank_{(h, r, t)_i}}
+\]
+
+\subsubsection{Hits@K}
+The ratio of how many positive triplets make it to the top $K$ list of triplets when ranked against negative triplets.
+\[
+    Hits@K = \sum_{i = 1}^{|Q|} 1 \, \text{if } rank_{(h, r, t)_i} \leq K
+\]
+In this thesis $K={1,3,5}$

@@ -1,5 +1,19 @@
-The training of the model was mainly done using the Pyg implementation of NBFNet, a codebase written by the original authors~\cite{NBFNet_PyG}.
+\subsection{NBFNet Function Selection}
 
-PNA DIST mult
+The training of the model was mainly done using the Pyg implementation of NBFNet, a codebase written by the original authors of~\cite{NBFNet_PyG}.
+For the AGGREGATE function, the principal neighborhood aggregation (PNA)~\cite{PNA} architecture was used, while for the MESSAGE function the DistMult~\cite{DistMult} function
+was used.
 
-transductive 8-1-1 split
+This combination was picked, as it was the highest performing setup in the original paper.
+
+\subsection{Experiment Data}
+For this experiment, a simplified view of the knowledge graph was used.
+This approach was selected due to the relatively low number of secondary edges which lead to overfitting,
+as shown in section TODO: insert ampligrpah section.
+
+Therefore, in the NBFNet experiment, only place nodes were used, with dense hierarchical edges and binned distance
+edges.
+
+In total there were 25,982 triplets, which were split in a 0.8/0.1/0.1 for train, test and validation datasets
+in a transductive manner.
+

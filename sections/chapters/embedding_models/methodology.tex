@@ -1,0 +1,35 @@
+In the initial KGE experiments, the dataset generated in TODO was used as data for the models.
+The dataset was split into train, test and validation dataset in a $80\%$, $10\%$ and $10\%$ ratio.
+The split was done in a transductive manner, such that there are no, previously unseen nodes in the test and validation
+dataset.
+
+To find the best performing model and the most optimal hyperparameters, a grid search was performed, with the MRR score
+being the basis of comparison.
+
+For each method detailed in section TODO, the following hyperparameters were tuned:
+\begin{itemize}
+    \item \textbf{Batch size:} 128, 256, 512, 1024, 2048
+    \item \textbf{Epochs:} 5, 25, 50, 100, 200, 250
+    \item \textbf{Eta:} 5, 10, 15 (\textit{eta specifies the number of corruptions to generate per each positive})
+    \item \textbf{Vector embedding size:} 50, 100, 150, 200
+    \item \textbf{Loss function:} pairwise, nll
+    \item \textbf{Optimizer:} AdaGrad, adam
+\end{itemize}
+
+The best performing model and hyperparameter combinations are shown on table~\ref{tab:kge-params}.
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|}
+        \hline
+        & \textbf{TransE} & \textbf{RotatE} & \textbf{HolE} & \textbf{DistMult} & \textbf{ComplEx} \\ \hline
+        \textbf{Batch size} & 2048 & 1024 & 128 & 128 & 128 \\ \hline
+        \textbf{Epochs} & 200 & 90 & 80 & 60 & 50 \\ \hline
+        \textbf{k} & 150 & 150 & 200 & 200 & 200 \\ \hline
+        \textbf{eta} & 5 & 15 & 5 & 5 & 5 \\ \hline
+        \textbf{loss} & pairwise & nll & pairwise & pairwise & pairwise \\ \hline
+        \textbf{optimizer} & adam & adam & adam & adam & adam \\ \hline
+    \end{tabular}
+    \caption{Best performing KGE hyperparameters}
+    \label{tab:kge-params}
+\end{table}
