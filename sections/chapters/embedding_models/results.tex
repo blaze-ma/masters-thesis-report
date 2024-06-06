@@ -1,0 +1,61 @@
+Unfortunately, even with the tuned hyperparameters, the KGE models produced subpar results (table~\ref{tab:kge-res}).
+With the highest MRR being $0.18$ produced by HolE, DistMult and ComplEx with DistMult slightly under-performing in
+hits@10 compared to the other two.
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+         & MRR & Hits@10 &  Hits@5 &  Hits@1 \\ \hline
+        TransE & 0.11   & 0.24 & 0.14 & 0.04 \\ \hline
+        RotatE & 0.16   & 0.21 & 0.17 & 0.13 \\ \hline
+        HolE & 0.18     &  0.22 & 0.19 & 0.16 \\ \hline
+        DistMult & 0.18 & 0.21 & 0.18 & 0.16 \\ \hline
+        ComplEx & 0.18  & 0.22 & 0.19 & 0.16 \\ \hline
+    \end{tabular}
+    \caption{Performance of thehyperparameter tuned KGE models on a previously unseen test dataset}
+    \label{tab:kge-res}
+\end{table}
+
+After some investigation, two apparent issues were found.
+First, the kilometer values of distance edges range from ~1 kilometer to over 1000 kilometers.
+Therefore, all the distance edges were binned into range.
+
+Second, the model was incorrectly predicting not explicitly defined hierarchical information.
+Since this information was available in the source dataset, it made sense to modify the training data
+to include all available hierarchical information instead of expecting the model to learn the hierarchical meta-paths.
+
+Finally, reverse edges types were introduced to increase the graph density.
+These edges were only inserted after the train / test / validation split to avoid leakage.
+
+The final edge composition in the data is shown on table~\ref{tab:kge-new-edges} (excluding the reverse edge counts
+as they are obviously equal to their counterparts.).
+
+\begin{table}[!ht]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Edge Type } & \textbf{Count} \\ \hline
+        DISTANCE\_0\_5 & 50 \\ \hline
+        DISTANCE\_5\_10 & 48 \\ \hline
+        DISTANCE\_10\_20 & 254 \\ \hline
+        DISTANCE\_20\_50 & 690 \\ \hline
+        DISTANCE\_50\_100 & 340 \\ \hline
+        DISTANCE\_100\_200 & 294 \\ \hline
+        DISTANCE\_200\_500 & 142 \\ \hline
+        DISTANCE\_500\_1000 & 6 \\ \hline
+        DISTANCE\_1000\_inf & 8 \\ \hline
+        wd\_P17 & 3507 \\ \hline
+        wd\_P31 & 13707 \\ \hline
+        wd\_P131\_DISTRICT & 3124 \\ \hline
+        wd\_P131\_METROPOLITAN & 4695 \\ \hline
+        wd\_P131\_PROVINCE & 4252 \\ \hline
+        wd\_P279 & 66 \\ \hline
+        wd\_P206 & 223 \\ \hline
+        wd\_P361 & 287 \\ \hline
+        wd\_P706 & 57 \\ \hline
+    \end{tabular}
+    \caption{Edge Count of the Second Iteration of the KGE Experiments}
+    \label{tab:kge-new-edges}
+\end{table}
+
+TODO: new results.

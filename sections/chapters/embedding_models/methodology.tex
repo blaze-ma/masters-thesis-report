@@ -3,6 +3,8 @@ The dataset was split into train, test and validation dataset in a $80\%$, $10\%
 The split was done in a transductive manner, such that there are no, previously unseen nodes in the test and validation
 dataset.
 
+The implementation of the models were done using the Python library—Ampligraph~\cite{ampligraph}
+
 To find the best performing model and the most optimal hyperparameters, a grid search was performed, with the MRR score
 being the basis of comparison.
 
@@ -20,15 +22,14 @@ The best performing model and hyperparameter combinations are shown on table~\re
 
 \begin{table}[!ht]
     \centering
-    \begin{tabular}{|l|l|l|l|l|l|}
+    \begin{tabular}{|l|l|l|l|l|l|l|}
         \hline
-        & \textbf{TransE} & \textbf{RotatE} & \textbf{HolE} & \textbf{DistMult} & \textbf{ComplEx} \\ \hline
-        \textbf{Batch size} & 2048 & 1024 & 128 & 128 & 128 \\ \hline
-        \textbf{Epochs} & 200 & 90 & 80 & 60 & 50 \\ \hline
-        \textbf{k} & 150 & 150 & 200 & 200 & 200 \\ \hline
-        \textbf{eta} & 5 & 15 & 5 & 5 & 5 \\ \hline
-        \textbf{loss} & pairwise & nll & pairwise & pairwise & pairwise \\ \hline
-        \textbf{optimizer} & adam & adam & adam & adam & adam \\ \hline
+        & \textbf{batch size} & \textbf{epochs} & \textbf{k} & \textbf{eta} & \textbf{loss} & \textbf{optimizer} \\ \hline
+        \textbf{TransE} & 2048 & 200 & 150 & 5 & pairwise & adam \\ \hline
+        \textbf{RotatE} & 1024 & 90 & 150 & 15 & nll & adam \\ \hline
+        \textbf{HolE} & 128 & 80 & 200 & 5 & pairwise & adam \\ \hline
+        \textbf{DistMult} & 128 & 60 & 200 & 5 & pairwise & adam \\ \hline
+        \textbf{ComplEx} & 128 & 50 & 200 & 5 & pairwise & adam \\ \hline
     \end{tabular}
     \caption{Best performing KGE hyperparameters}
     \label{tab:kge-params}

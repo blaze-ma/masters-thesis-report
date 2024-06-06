@@ -23,7 +23,12 @@
   Selma Lagerløfs Vej 300\\
   \href{http://www.cs.aau.dk/}{http://www.cs.aau.dk/}
 }{% the abstract
-  This thesis investigates rule-based and machine learning approaches for enhancing a knowledge graph constructed from data parsed from the medieval gazeteer,
-  Kitāb Mu'jam al-Buldān written by Yâqût al-Hamawî. The research employs state-of-the-art graph neural networks alongside classical embedding and rule-based techniques.
-  An iterative approach is used, with continuous analysis guiding the knowledge graph's improvement.
+  This thesis explores data parsed~\cite{YaqutRB} from the medieval gazeteer,
+  Kitāb Mu'jam al-Buldān written by Yâqût al-Hamawî~\cite{Yaqut}.
+  First, a knowledge graph is constructed to represent the parsed data.
+  Then various Knowledge Graph Embedding and an NBFNet~\cite{NBFNet} model are trained on the newly created the graph to predict new,
+  previously unkown links, and detect potential false positives.
+
+  Finally, this thesis attempts to improve the performance of a NBFNet model by pre-training it on a synthetic
+  dataset generated from the knowledge graph WorldKG~\cite{WorldKG}
 }
