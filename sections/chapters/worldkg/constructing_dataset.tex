@@ -1,0 +1,26 @@
+To construct the synthetic dataset, first, beneficial patterns need to be created.
+While it is entirely possible to create a fully connected graph, it would not represent the biases found Kitāb well.
+Nodes like Alexandria are central because Yâqût found it important to define places in relation to big, central places.
+Second, the local structures in Kitāb KG exist because Yâqût also found it important to define places in relation
+to their surroundings.
+These ideas may be boiled down into the following simple bullet points:
+\begin{itemize}
+    \item A nodes's local neighborhood should be well-connected.
+    \item Each node should be connected to some central entity.
+    \item Central entities should be connected to each other.
+\end{itemize}
+
+Following these simple rules, one could create a Kitāb KG-like synthetic dataset with higher density.
+In theory the entire WorldKG dataset could be used to create such synthetic dataset, for practical purposes,
+in reality the data was heavily down-sampled.
+
+\subsection{Selecting Relevant Nodes}
+In WorldKG there are over 1000 node types, most of them irrelevant for this thesis' purpose, since, for example,
+there were exceedingly few airports in the medieval arab world.
+Instead, the categories discussed in section TODO were mapped to their OSM equivalent.
+
+Then, with Baghdad selected as the centre point, all WorldKG place nodes (of relevant type) were selected in a 2000km
+radius, using the following SparQL query:
+
+\begin{verbatim}
+\end{verbatim}
