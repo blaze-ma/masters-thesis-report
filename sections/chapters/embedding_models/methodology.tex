@@ -1,4 +1,4 @@
-In the initial KGE experiments, the dataset generated in TODO was used as data for the models.
+In the initial KGE experiments, the dataset generated in section~\ref{sec:building-complete-knowledge-graph} was used as data for the models.
 The dataset was split into train, test and validation dataset in a $80\%$, $10\%$ and $10\%$ ratio.
 The split was done in a transductive manner, such that there are no, previously unseen nodes in the test and validation
 dataset.
@@ -8,7 +8,7 @@ The implementation of the models were done using the Python library—Ampligraph
 To find the best performing model and the most optimal hyperparameters, a grid search was performed, with the MRR score
 being the basis of comparison.
 
-For each method detailed in section TODO, the following hyperparameters were tuned:
+For each method detailed in section~\ref{sec:embedding-methods}, the following hyperparameters were tuned:
 \begin{itemize}
     \item \textbf{Batch size:} 128, 256, 512, 1024, 2048
     \item \textbf{Epochs:} 5, 25, 50, 100, 200, 250

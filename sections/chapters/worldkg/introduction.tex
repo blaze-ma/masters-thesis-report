@@ -1,4 +1,4 @@
-The previous experiments in chapter TODO and chapter TODO show that regardless of the class of approach used,
+The previous experiments in chapter~\ref{ch:nbfnet} and chapter ~\ref{ch:knowledge-graph-embedding-methods} show that regardless of the class of approach used,
 there is a fundamental barrier when working with this thesis' knowledge graph.
 Namely, there is a high chance that the sparsity of the graph prevents
 any potential model from properly being able to generalize.
@@ -6,10 +6,10 @@ any potential model from properly being able to generalize.
 As a solution, this thesis proposes an alternate approach.
 Instead of trying additional models, the previously used
 NBFNet model could be pre-trained on a denser graph.
-Since the Kitāb KG, ultimately is just the graph representation of a geospatial area,
+Since the Kitāb KG, ultimately, is just the graph representation of a geospatial area,
 it is relatively easy to create a synthetic dataset that mimics it.
 Moreover, creating such a dataset allows for the introduction of specific distance edge biases, not generally present in Kitāb, that could provide valuable information to researchers.
 Pre-training the NBFNet model on such a dataset could allow it to generalize significantly better.
 
-A perfect source of data for creating such a synthetic dataset is WorldKG TODO cite - a research project that parsed OpenStreetMaps data into triplestore data.
+A perfect source of data for creating such a synthetic dataset is WorldKG~\cite{WorldKG} - a research project that parsed OpenStreetMaps~\cite{OpenStreetMap} data into triplestore data.
 The desired synthetic dataset could be created by sampling WorldKG and converting the relevant triples to use this thesis' ontology.

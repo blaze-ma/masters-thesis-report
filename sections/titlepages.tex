@@ -1,7 +1,7 @@
 \pdfbookmark[0]{English title page}{label:titlepage_en}
 \aautitlepage{%
   \englishprojectinfo{
-    Knowledge Graph Analysis and Completion: Transforming and Enhancing Geographical Data Parsed from Yâqût al-Hamawî's Kitāb Mu'jam al-Buldān %title
+      Exploring Methods for Link Prediction on a Historical Geographic Knowledge Graph
   }{%
     Scientific Theme %theme
   }{%
@@ -23,12 +23,21 @@
   Selma Lagerløfs Vej 300\\
   \href{http://www.cs.aau.dk/}{http://www.cs.aau.dk/}
 }{% the abstract
-  This thesis explores data parsed~\cite{YaqutRB} from the medieval gazeteer,
+  This thesis explores data parsed~\cite{YaqutRB} from the medieval gazetteer,
   Kitāb Mu'jam al-Buldān written by Yâqût al-Hamawî~\cite{Yaqut}.
-  First, a knowledge graph is constructed to represent the parsed data.
-  Then various Knowledge Graph Embedding and an NBFNet~\cite{NBFNet} model are trained on the newly created the graph to predict new,
-  previously unkown links, and detect potential false positives.
 
-  Finally, this thesis attempts to improve the performance of a NBFNet model by pre-training it on a synthetic
-  dataset generated from the knowledge graph WorldKG~\cite{WorldKG}
+  The parsed dataset was created as part of The Middle East Heritage Data Integration Endeavour~\cite{MEHDIE}
+  The MEHDIE Project attempts to aggregate multilingual historical information in the domain of
+  Medieval Middle Eastern History.
+
+  This thesis proposes an approach to transform the parsed Kitāb dataset into a knowledge graph to assist with MEHDIE's goal.
+  To further assist the aggregation efforts, this thesis explores various link-prediction methods to predict new
+  positive triplets and detect parsing errors.
+
+  Moreover, it proposes a potential approach for generating a large and dense
+  synthetic pre-training dataset for geospatial link prediction models using a Knowledge Graph representation
+  of OpenStreetMaps~\cite{OpenStreetMap} called WorldKG~\cite{WorldKG}.
+
+  Finally, it is demonstrated that a GNN model could act as an Error Detection model for the rule-based parser used
+  to generate the original Kitāb dataset.
 }

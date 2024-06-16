@@ -1,19 +1,15 @@
-A common task of historians is to digitize, parse and categorize historical written records.
-One such project us The Middle East Heritage Data Integration Endeavour (MEHDIE) ~\cite{MEHDIE}.
-The aim of MEHDIE is to aggregate and align multilingual data generated in the medieval Middle East.
+A common task of historians is to digitize, parse, and categorize historical written records.
+One such project is The Middle East Heritage Data Integration Endeavour (MEHDIE) ~\cite{MEHDIE}.
+MEHDIE aims to aggregate and align multilingual data generated in the Medieval Middle East.
 
 One such dataset is derived from Yaqut al-Hamawi's Dictionary of Countries ~\cite{Yaqut}.
-This dataset was created by scanning a manuscript with OCR technology, and then using a rule based approach parsed the
-available information.
-The methodology and the creation of the dataset is described in ~\cite{YaqutRB}
+This dataset was created by scanning a manuscript with OCR technology and then extracting parsed data from
+the text entries using a rule-based model~\cite{YaqutRB}
 
-The exact structure of the final dataset is described in section ~\ref{sec:yagut}.
-
-However, this dataset has some shortcomings.
-First, it is available in a non-standard format, making it difficult for subsequent researchers to consume the data.
+However, this parsed dataset has some shortcomings.
+First, it is only available in a non-standard format, making it difficult for subsequent researchers to consume the data.
 Second, it is strictly based on the data parsed from the original manuscript.
-This however hinders MEHDIE's data alignment initiatives.
-
-This thesis addresses the former issue by experimenting with various knowledge graph representations of the original dataset,
-and addresses the latter issue, by using these new representations to create link prediction models to expand the available
+This limitation, however, hinders MEHDIE's data alignment initiatives.
+This thesis addresses the former issue by experimenting with various knowledge graph representations of the original dataset
+. It addresses the latter issue by using these new representations to create link prediction models to expand the available
 information.

@@ -1,4 +1,5 @@
-\usepackage{listings}%  A simple AAU report template.
+\usepackage{listings}
+\usepackage{stmaryrd}%  A simple AAU report template.
 %  2015-05-08 v. 1.2.0
 %  Copyright 2010-2015 by Jesper Kjær Nielsen <jkn@es.aau.dk>
 %
@@ -22,6 +23,10 @@
 %frontmatter
 \pagestyle{empty} %disable headers and footers
 \pagenumbering{roman} %use roman page numbering in the frontmatter
+
+\section{Mandatory Summary Section}\label{sec:summary}
+\input{sections/summary}
+
 \input{sections/frontpage}
 \input{sections/colophon}
 \input{sections/titlepages}

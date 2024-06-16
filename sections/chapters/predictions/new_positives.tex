@@ -2,18 +2,18 @@ To generate previously unknown positive triplets, one needs to generate a set of
 A generation strategy is necessary as trying all possible $(h,r,t)$ combinations is computationally expensive
 with its cost increasing exponentially with the number of nodes and edge types.
 
-In the case of hierarchical edges: first,
+In the case of hierarchical edges, first,
 the nodes with missing hierarchical information were selected as the head entities.
 Second, all place nodes within 2-hops of the head entity were selected as tail entity candidates.
 
-For the distance type edges, such a hop limitation would not have beneficial as the kilometer value of the edges range from
-1 kilometer to over 1000 kilometers.
+For the distance-type edges, such a hop limitation would not be beneficial as the kilometer value of the edges ranges from
+One kilometer to over a thousand kilometers.
 
 Therefore, it was decided to randomly sample nodes with low centrality measurements.
 This approach has the benefit of potentially providing the highest value information.
 
 Predicting a new edge for an entity that only has 1--2 connections to the rest of the graph
-increases the average node degree at a larger ratio than prediction a new edge for Baghdad, which is
+increases the average node degree at a larger ratio than the prediction of a new edge for Baghdad, which is
 already an extremely central node in the graph.
 
 The Ampligraph~\cite{ampligraph} library exposes several strategies for finding such nodes.
@@ -30,10 +30,10 @@ In this thesis, the Cluster Triangles approach was used to generate triplet cand
 
 \subsection{Hierarchical Triplet Candidates}
 The general feedback on the predicted hierarchical candidates was that the model is seemingly able to recognize hierarchical
-ordering between two places, but struggles to correctly identify the exact level of hierarchy.
+ordering between two places but struggles to correctly identify the exact level of hierarchy.
 A false positive example highlighted in the evaluation was the prediction that
-\RL{المراكب} (almrākb) a city in Tunisia was in the province of Tunisia.
-However, Tunisia is not actually a province, but instead both Tunisia and \RL{المراكب} are in the province of North Africa.
+\RL{المراكب} (almrākb), a city in Tunisia was in the province of Tunisia.
+However, Tunisia is not actually a province; instead, both Tunisia and \RL{المراكب} are in the province of North Africa.
 Upon reviewing the graph, it was found that no node has a \textbf{wd\_P131\_PROVINCE} edge with Tunisia as the tail.
 
 When making this prediction, the model's decision could be followed as:
@@ -41,16 +41,16 @@ When making this prediction, the model's decision could be followed as:
 weight: 3.33629:
 <almrākb, wd_P131_DISTRICT, Tunisia>
 \end{verbatim}
-Which is to be interpreted such that the model's main reason for predicting this triplet to be true is
+This is to be interpreted such that the model's main reason for predicting this triplet to be true is
 the known \textbf{wd\_P131\_DISTRICT} edge between the two entities.
 This is a rather odd finding, as no similar patterns were found in the training dataset, where the district and
-the province tail entity of a head node are the same.
+the province tail entity of a head node is the same.
 
 
 \subsection{Distance Triplet Candidates}
-The Distance predictions fail in a similar manner, the general feedback was that the model seems to be to capture
+The Distance predictions fail in a similar manner, the general feedback was that the model seems to be able to capture
 some form of semantic relation between places.
-For example, the highest rated distance predictions are consistently of between places within the same
+For example, the highest rated distance predictions are consistently for places that are found in the same
 administrative area.
 However, the types of distance edge chosen are often wildly inaccurate.
 For example, a highly rated false positive triplet is between the Spanish city of Córdoba and the Spanish municipality
@@ -58,23 +58,12 @@ of Toledo.
 The model, with high certainty predicted that these two entities should be within 5 kilometers of each other, when
 in reality they are roughly 230 kilometers away from each other.
 
+The main contributor to this prediction is as follows:
+\begin{verbatim}
+weight: 3.27499
+<Córdoba, DISTANCE_200_500, Toledo>
+\end{verbatim}
 
-
-Compared to hierarchical triplet prediction,
-
-
-Moran feedback (generally positive on false positives):
-
-armīah is indeed next to a place named "al-Buheirah" but it's not the same id as the "al-Buheirah"  in this list
-khrjān is indeed a higher hierarchy (district) of dilman
-sūrā and sūrā () are both mentioned in the disrtict of Iraq, close to Baghdad, but they are not related according to the text
-ḥqīl () is not geographically descibed in the text of the author.
-However, there are stories that the auther mention taking place in the river "al-Ma'la".
-The affilition is not to the place but to the story.
-the heirarchy here is in the opposite direction.
-Al-Kufah is a town in Babl (which is the old name of Iraq - Babylonia).
-The text says sometimes they refer to Babl as "Babl al-Kufah", so it can make this confusion.
-Bahr al-Sham is the mediteranian sea and although it is mentioned under Dimasq (Damascus) it is not heirarchial to it.
-The text mentions that there are two settlements named al-Iskandiria,
-the less known of them is a town on the Tigris River in today's Iraq 15 Parasangs (leagues) from Wast
-I think they are not affiliated heirarchically
+This is once again an unusual result, as the model predicted a different distance edge based on the existence of
+another distance edge between the two places.
+It also highlights a bug in the candidate selection logic.

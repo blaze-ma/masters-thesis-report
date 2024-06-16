@@ -1,0 +1,18 @@
+Besides generating new potential positive triplets, the training data was fed through the model once again as well.
+The training triplets with the lowest certainty were then evaluated to check whether they were actually true statements.
+Surprisingly, unlike in the domain of new triplet prediction, the model appeared to perform much better at recognizing
+false negative triplets.
+
+For example, the model flagged the \textbf{DISTANCE\_0\_5} relationship between armīah and al-Buheirah as a potential false
+positive.
+After reviewing the text snippet, from which these places were parsed from, it was found that there is another
+place called al-Buheirah.
+
+
+Another interesting example was the triplet of \RL{حقيل}, \textbf{wd\_P131\_METROPOLITAN} \RL{نهر المعلى}.
+In this case, the text from which these places and relationships were parsed contained a story told by a shepherd.
+And because the shepherd mentioned one of the places, the rule-based parser picked up on it and generated a false positive triplet.
+The model apparently picked up the issue as the two nodes were in a different province.
+
+The general feedback on the highlighted potential false positives was that the model marked a lot of
+triplets where one of the members had a very generic name like mountain or lake.

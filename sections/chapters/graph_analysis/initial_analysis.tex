@@ -1,6 +1,4 @@
 \subsection{Network Density and Connectivity}\label{subsec:network-density-and-connectivity}
-
-
 Even with the disconnected nodes removed, the graph appears to be extremely sparse.
 This is apparent from the density, which  may be calculated as follows:
 \[
@@ -8,25 +6,24 @@ This is apparent from the density, which  may be calculated as follows:
 \]
 
 With 8574 nodes and 10790 edges, the density is $~0.00029$.
-Considering that a graph's density such that: ($0 \leq density \leq 1$), this graph is rather disconnected.
+Considering that a graph's density is such that: ($0 \leq density \leq 1$), this graph is rather disconnected.
 
 \subsection{Average Degree and Degree Distribution}\label{subsec:average-degree-and-degree-distribution}
-The average degree of a node is 1.258, which again reinforces the perception of a sparse graph.
-This low density may cause problems down the line, as link prediction methods commonly perform better on denser graphs.
+The average node degree is 1.258, reinforcing the perception that the graph is sparse.
+This low density may cause problems down the line, as link prediction methods commonly perform better on denser graphs
 
 The degree distribution (figure~\ref{fig:degree-distribution})
 shows that there are a few nodes in the graph that are exceedingly central
-(upwards of 6000 edges).
+(upwards of 300 edges).
 After some investigation,
 it was found that these nodes generally correspond to large medieval cities or countries such as Baghdad,
 Alexandria or Yemen.
-
-Besides these highly central nodes, the degree distribution is fairly spread out.
+Besides these highly central nodes, most nodes (6000+) only have a single edge.
 
 \begin{figure}[h] % [h] attempts to place figure here, other options like [t]op, [b]ottom
     \centering % Centers the figure horizontally
     \includegraphics[width=1\linewidth]{figures/degree-distribution/degree-distribution} % Include the image with desired width
-    \caption{Degree Distribution of the Initial Graph} % Add a caption
+    \caption{Degree Distribution of the initial graph.} % Add a caption
     \label{fig:degree-distribution} % Assign a label for referencing the figure in text
 \end{figure}
 
@@ -34,10 +31,8 @@ Besides these highly central nodes, the degree distribution is fairly spread out
 \subsection{Modularity}\label{subsec:modularity}
 Using Gephi's~\cite{Gephi} implementation of the Louvian method~\cite{Louvian} with a resolution of 5.0,
 217 communities were found.
-
-However, the high number of communities is only indicative of a highly disconnected graph, with many small, isolated node islands.
-In practice there are 8 large groups accounting for 94.62\% of the nodes.
-
+However, the high number of communities is only indicative of a highly disconnected graph, with many small, isolated islands.
+In practice, eight large groups account for 94.62\% of the nodes.
 The modularity breakdown is shown on table:~\ref{tab:luv-communities}
 
 
@@ -55,12 +50,12 @@ Group 6       & 8.69\%              & Red                      \\ \hline
 Group 7       & 6.85\%                & Yellow                   \\ \hline
 Group 8       & 5.82\%                & Cyan                     \\ \hline
 \end{tabular}
-\caption{Communities ratios detected by the Louvain method}
+\caption{Communities detected by the Louvain method}
 \label{tab:luv-communities}
 \end{table}
 
 Figure~\ref{fig:communities} shows that the detected, large communities are fairly easy to visually distinguish.
-Moreover, it shows that the highly central nodes (visualized via larger diameter) are spread around the communities fairly evenly.
+Moreover, it shows that the highly central nodes (visualized by a larger diameter) are spread around the communities fairly evenly.
 
 \begin{figure}[h] % [h] attempts to place figure here, other options like [t]op, [b]ottom
     \centering % Centers the figure horizontally
@@ -69,14 +64,10 @@ Moreover, it shows that the highly central nodes (visualized via larger diameter
     \label{fig:communities} % Assign a label for referencing the figure in text
 \end{figure}.
 
-
 \subsection{Unexpected Patterns}\label{subsec:odd-patterns}
-
 While working with the parsed dataset, some odd patterns were found.
-First, \textbf{DISTANCE} triplets were found, where both the head and tail entity were the same.
-At the recommendation of the authors of ~\cite{YaqutRB} these triplets were discarded.
-
-
+First, distance triplets were found, where both the head and tail entities were the same.
+At the recommendation of the head, author of ~\cite{YaqutRB}, these triplets were discarded.
 
 \begin{figure}[h] % [h] attempts to place figure here, other options like [t]op, [b]ottom
     \centering % Centers the figure horizontally
@@ -95,7 +86,7 @@ that did not fit to the classical strict, unidirectional layout of other similar
     \label{fig:odd2} % Assign a label for referencing the figure in text
 \end{figure}
 
-These patterns were extracted and forwarded to the Mehdie researchers using the following Neo4J query:
+These patterns were extracted and forwarded to the MEHDIE researchers using the following Neo4J query:
 \begin{verbatim}
     MATCH (n)-[:{r1}]->(m)-[:{r2}]->(n) RETURN n,m
 \end{verbatim}

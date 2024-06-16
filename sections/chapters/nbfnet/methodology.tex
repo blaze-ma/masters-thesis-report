@@ -1,19 +1,14 @@
 \subsection{NBFNet Function Selection}
 
 The training of the model was mainly done using the Pyg implementation of NBFNet, a codebase written by the original authors of~\cite{NBFNet_PyG}.
-For the AGGREGATE function, the principal neighborhood aggregation (PNA)~\cite{PNA} architecture was used, while for the MESSAGE function the DistMult~\cite{DistMult} function
-was used.
-
-This combination was picked, as it was the highest performing setup in the original paper.
+For the AGGREGATE function, the principal neighborhood aggregation (PNA)~\cite{PNA} architecture was used, while for the MESSAGE function, the DistMult~\cite{DistMult} function
+was used. This combination was picked as it was the highest-performing setup in the original paper.
+The model was trained with an Adam optimizer, with a learning rate of 5.0e-3 using 64 item batches for 20 epochs.
 
 \subsection{Experiment Data}
 For this experiment, a simplified view of the knowledge graph was used.
-This approach was selected due to the relatively low number of secondary edges which lead may have lead to overfitting,
-as shown in section TODO: insert ampligrpah section.
-
+This approach was selected due to the relatively low number of secondary edges derived from Wikidata which may have led to the introduction of damaging biases.
 Therefore, in the NBFNet experiment, only place nodes were used, with dense hierarchical edges and binned distance
 edges.
-
-In total there were 25,982 triplets, which were split in a 0.8/0.1/0.1 for train, test and validation datasets
+In total, there were 25,982 triplets, which were split in a 0.8/0.1/0.1 for train, test, and validation datasets
 in a transductive manner.
-

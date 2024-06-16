@@ -1,4 +1,4 @@
-To construct the synthetic dataset, first, beneficial patterns need to be created.
+To construct the synthetic dataset, useful patterns need to be created first.
 While it is entirely possible to create a fully connected graph, it would not represent the biases found Kitāb well.
 Nodes like Alexandria are central because Yâqût found it important to define places in relation to big, central places.
 Second, the local structures in Kitāb KG exist because Yâqût also found it important to define places in relation
@@ -11,16 +11,80 @@ These ideas may be boiled down into the following simple bullet points:
 \end{itemize}
 
 Following these simple rules, one could create a Kitāb KG-like synthetic dataset with higher density.
-In theory the entire WorldKG dataset could be used to create such synthetic dataset, for practical purposes,
-in reality the data was heavily down-sampled.
+In theory, the entire WorldKG dataset could be used to create such a synthetic dataset, for practical purposes,
+in reality, the data was heavily down-sampled.
 
 \subsection{Selecting Relevant Nodes}
-In WorldKG there are over 1000 node types, most of them irrelevant for this thesis' purpose, since, for example,
+In WorldKG, there are over one thousand node types, most of them irrelevant to this thesis' purpose since, for example,
 there were exceedingly few airports in the medieval arab world.
-Instead, the categories discussed in section TODO were mapped to their OSM equivalent.
+Instead, the categories discussed in subsection~\ref{subsec:categories} were mapped to their OSM equivalent.
 
-Then, with Baghdad selected as the centre point, all WorldKG place nodes (of relevant type) were selected in a 2000km
-radius, using the following SparQL query:
+Then, with Baghdad selected as the center point, all WorldKG place nodes (of relevant type) were selected in a 2000 km
+radius, using the following SPARQL query:
 
 \begin{verbatim}
+SELECT ?subject ?type ?label ?wikidata ?subjectWKT ?distance
+WHERE {
+    # wkg:21034458 = Baghdad
+    wkg:21034458 wkgs:spatialObject ?spatialObject .
+   ?spatialObject geo:asWKT ?referenceWKT .
+
+    ?subject rdf:type ?type .
+    ?subject rdfs:label ?label .
+    ?subject wkgs:spatialObject ?subjectSpatialObject .
+    ?subjectSpatialObject geo:asWKT ?subjectWKT .
+    OPTIONAL {{ ?subject wkgs:wikidata ?wikidata . }}
+
+    FILTER (?type IN ({types}))
+    BIND(geof:distance(?referenceWKT, ?subjectWKT, uom:metre) AS ?distance) .
+    FILTER(?distance < 2000000).
+}
+
 \end{verbatim}
+This query returned 238135 distinct nodes.
+These nodes were then randomly down-sampled to 47627 entities (20\%).
+
+\subsection{Generating Hierarchy Triplets}
+The only piece of information that was not readily available in WorldKG was the hierarchical information.
+Fortunately, for each node selected, there is a corresponding geometric point literal.
+This point can be used to query an OSM Overpass API, such as~\cite{Overpass} to get all administrative objects
+in which the point is contained.
+
+\begin{verbatim}
+is_in({x},{y})->.a;
+rel(pivot.a)[boundary=administrative];
+out tags center;
+\end{verbatim}
+
+The above query, written in Overpass API Query Language, among other things, gets the ID, administrative level, and
+the geographical center of all enclosing administrative boundaries overlapping the parameter point.
+In OpenStreetMaps, there are 11 levels of administrative hierarchy that try to represent every nation's system.
+To construct the hierarchical data for the synthetic dataset, the levels were split as follows:
+
+\begin{enumerate}
+    \item $[4,3,2] \mapsto$ \textbf{wd\_P131\_PROVINCE}
+    \item $[7,6,5] \mapsto$ \textbf{wd\_P131\_DISTRICT}
+    \item $[11,10,9,8] \mapsto$ \textbf{wd\_P131\_METROPOLITAN}
+\end{enumerate}
+
+The logic was written such that it always tries to pick the level with the highest integer value; this was done
+to increase granularity in the data.
+
+\subsection{Generating Distance Edges}
+In line with the above-detailed rules, for each node, its close neighborhood should be as dense as possible.
+Therefore, for each node pair, a corresponding great circle distance was calculated.
+Then, for each node, these distance edges were sampled, such that the further away the nodes were from each other,
+the less likely to be sampled.
+
+\subsection{Generating Distance Edges for Hierarchical Nodes}
+To generate the distance edges between nodes that are higher in the hierarchy (i.e., more important places)
+all possible pair combinations were selected.
+These pairs then, without sampling, were written into triplets with the corresponding distance edge type,
+selected based on the great circle distance.
+
+\subsection{Generating Category Triplets}
+In the original query, where all the nodes were selected, their types were also queried.
+These can be mapped onto the Kitāb KG categories.
+
+Finally, every node is then connected to the initial starting point, Baghdad, based on the
+great circle distance.
